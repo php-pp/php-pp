@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+
+source "${ROOT_DIR}"/config/github.inc.bash
+
+readonly GIT_BRANCH="${1-}"
+if [ "${GIT_BRANCH}" == "" ]; then
+    echo -e "\e[41m You have to pass first argument: GIT_BRANCH (example: 1.0). \e[0m"
+    exit 1
+fi
+
+"${ROOT_DIR}"/bin/synchronize/synchronize "${GIT_BRANCH}" "package/core" "${GITHUB_CORE_REPOSITORY}"
