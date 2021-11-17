@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+source "${ROOT_DIR}"/bin/common.inc.bash
+
+BIN_DIR=bin/dev
+source "${ROOT_DIR}"/bin/dockerise.inc.bash
+
+readonly vendorPath="${ROOT_DIR}"/vendor/php-pp/core-contract
+if [ -d "${vendorPath}" ] || [ -L "${vendorPath}" ]; then
+    echo -e "Remove \e[33m${vendorPath}\e[0m"
+    rm -rf "${vendorPath}"
+fi
+
+readonly coreContractPath=$(dirname "${HOST_ROOT_DIR}")"/core-contract"
+echo -e "Create symlink from \e[32m${coreContractPath}\e[0m to \e[32m${vendorPath}\e[0m"
+ln -s "${coreContractPath}" "${vendorPath}"
+ls -lah --color=always "${vendorPath}"

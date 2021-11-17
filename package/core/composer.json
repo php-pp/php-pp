@@ -1,0 +1,30 @@
+{
+    "name": "php-pp/core",
+    "type": "library",
+    "description": "PHP++ core",
+    "license": "MIT",
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "php-pp/core-contract": "0.0.*"
+    },
+    "require-dev": {
+        "ext-simplexml": "*",
+        "phpbehavior/phpbehavior": "0.7.*",
+        "phpunit/phpunit": "9.5.*",
+        "symfony/var-dumper": "5.3.*"
+    },
+    "config": {
+        "cache-dir": "/app/var/composer/cache",
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpPp\\Core\\Component\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpPp\\Core\\Component\\Tests\\": "tests"
+        }
+    }
+}
