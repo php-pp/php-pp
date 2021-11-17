@@ -1,0 +1,19 @@
+name: Synchronize
+
+on:
+    workflow_dispatch:
+        inputs:
+            branch:
+                description: Branch
+                required: true
+
+jobs:
+    build:
+        name: Release
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                package: [core, core-contract]
+        steps:
+            - uses: actions/checkout@v2
+            - run: bin/synchronize/${{ matrix.package }} "${{ github.event.inputs.branch }}"
