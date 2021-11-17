@@ -2,10 +2,7 @@
 
 set -eu
 
-readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
-
 source "${ROOT_DIR}"/bin/synchronize/dockerise.inc.bash
-
 source "${ROOT_DIR}"/config/github.inc.bash
 
 readonly GIT_BRANCH="${1-}"
@@ -14,17 +11,19 @@ if [ "${GIT_BRANCH}" == "" ]; then
     exit 1
 fi
 
-readonly DIRECTORY_TO_SYNCHRONIZE="${2-}"
-if [ "${DIRECTORY_TO_SYNCHRONIZE}" == "" ]; then
-    echo -e "\e[41m You have to pass second argument: DIRECTORY_TO_SYNCHRONIZE (example: package/core). \e[0m"
+readonly RELEASE_TOKEN="${2-}"
+if [ "${RELEASE_TOKEN}" == "" ]; then
+    echo -e "\e[41m You have to pass second argument: RELEASE_TOKEN. \e[0m"
     exit 1
 fi
 
-readonly READ_ONLY_REPOSITORY_URL="${3-}"
-if [ "${READ_ONLY_REPOSITORY_URL}" == "" ]; then
-    echo -e "\e[41m You have to pass thid argument: READ_ONLY_REPOSITORY_URL (example: https://github.com/php-pp/core.git). \e[0m"
+if [ "${PACKAGE_TO_SYNCHRONIZE-}" == "" ]; then
+    echo -e "\e[41m You have to set variable PACKAGE_TO_SYNCHRONIZE (example: core). \e[0m"
     exit 1
 fi
+readonly DIRECTORY_TO_SYNCHRONIZE="package/${PACKAGE_TO_SYNCHRONIZE}"
+
+readonly READ_ONLY_REPOSITORY_URL="https://${RELEASE_TOKEN}@github.com/php-pp/${PACKAGE_TO_SYNCHRONIZE}.git"
 
 readonly CLONE_DIR="/tmp/php-pp"
 echo -e "> Cloning \e[33m${GITHUB_PHPPP_REPOSITORY}\e[0m into \e[33m${CLONE_DIR}\e[0m."
@@ -55,9 +54,4 @@ FILTER_BRANCH_SQUELCH_WARNING=1 \
 echo ""
 echo -e "> Push to \e[33m${READ_ONLY_REPOSITORY_URL}\e[0m"
 git branch -m synchronize
-git \
-    remote \
-        add \
-            synchronize \
-            "${READ_ONLY_REPOSITORY_URL}"
-git push synchronize synchronize
+git push ${READ_ONLY_REPOSITORY_URL} synchronize

@@ -9,11 +9,11 @@ on:
 
 jobs:
     build:
-        name: Release
+        name: Synchronize
         runs-on: ubuntu-latest
         strategy:
             matrix:
                 package: [core, core-contract]
         steps:
             - uses: actions/checkout@v2
-            - run: bin/synchronize/${{ matrix.package }} "${{ github.event.inputs.branch }}"
+            - run: bin/synchronize/${{ matrix.package }} "${{ github.event.inputs.branch }}" "${{ secrets.RELEASE_TOKEN }}"
