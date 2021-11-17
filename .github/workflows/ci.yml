@@ -1,0 +1,34 @@
+name: CI
+on: [push]
+
+jobs:
+    validate:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                package: [core, core-contract]
+        env:
+            PACKAGE_PATH: package/${{ matrix.package }}
+        steps:
+            - uses: actions/checkout@v2
+
+            -
+                name: Save current week
+                id: current-week
+                run: echo "::set-output name=current-week::$(date -u "+%Y-%W")"
+
+            -
+                name: Composer cache
+                uses: actions/cache@v2
+                with:
+                    path: ${{ env.PACKAGE_PATH }}/vendor
+                    key: composer-${{ steps.current-week.outputs.current-week }}-${{ hashFiles(format('{0}/composer.json', env.PACKAGE_PATH)) }}
+                    restore-keys: composer-${{ steps.current-week.outputs.current-week }}-${{ hashFiles(format('{0}/composer.json', env.PACKAGE_PATH)) }}
+
+            -
+                name: bin/ci/env
+                run: ${{ env.PACKAGE_PATH }}/bin/ci/env
+
+            -
+                name: bin/ci/validate
+                run: ${{ env.PACKAGE_PATH }}/bin/ci/validate
