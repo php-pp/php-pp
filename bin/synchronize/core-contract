@@ -4,5 +4,5 @@ set -eu
 
 readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 
-readonly PACKAGE_TO_SYNCHRONIZE="core"
+readonly PACKAGE_TO_SYNCHRONIZE="core-contract"
 source "${ROOT_DIR}"/bin/synchronize/synchronize.inc.bash
