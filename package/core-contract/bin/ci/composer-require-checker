@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+source "${ROOT_DIR}"/bin/common.inc.sh
+source "${ROOT_DIR}"/bin/dockerise.inc.bash
+
+composer-require-checker \
+    --ansi \
+    --config-file="${ROOT_DIR}"/config/ci/composer-require-checker.json \
+    "${@}"

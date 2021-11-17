@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/..")"
+source "${ROOT_DIR}"/bin/common.inc.bash
+
+source "${ROOT_DIR}"/bin/dockerise.inc.bash
+
+function removeComposerLock {
+    if [ -f "${ROOT_DIR}"/composer.lock ]; then
+        rm "${ROOT_DIR}"/composer.lock
+    fi
+}
+
+removeComposerLock
+composer "${@}"
+removeComposerLock

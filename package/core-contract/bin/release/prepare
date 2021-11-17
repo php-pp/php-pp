@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly rootDir="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+readonly version="${1}"
+readonly logFilePath="${rootDir}/var/release"
+readonly logFilename="${logFilePath}/prepare.log"
+
+function onError() {
+    if [ -f "${logFilename}" ]; then
+        cat "${logFilename}"
+    fi
+
+    echo -e "\e[41m Error. \e[0m"
+}
+
+trap onError ERR
+
+function initLog() {
+    trap onError ERR
+
+    if [ ! -d "${logFilePath}" ]; then
+        mkdir -p "${logFilePath}"
+    fi
+
+    if [ -f "${logFilename}" ]; then
+        rm "${logFilename}"
+    fi
+}
+
+function updateReleaseBadge() {
+    trap onError ERR
+
+    echo "Edit release badge in README.md"
+
+    local releaseBadge="[![Version](https:\/\/img.shields.io\/badge\/version-${version}-blueviolet.svg)](https:\/\/github.com\/php-pp\/core\/tree\/${version})"
+    sed -i "1s/.*/${releaseBadge}/" "${rootDir}"/README.md
+}
+
+function updateCodeLinesBadge() {
+    trap onError ERR
+
+    echo "Edit code lines badge in README.md"
+
+    local codeLines=
+    codeLines=$("${rootDir}"/bin/release/code-lines)
+    local codeLinesBadge="![Lines](https:\/\/img.shields.io\/badge\/code%20lines-${codeLines}-blue.svg)"
+    sed -i "3s/.*/${codeLinesBadge}/" "${rootDir}"/README.md
+}
+
+function updateComposerRequire() {
+    trap onError ERR
+
+    echo "Edit composer require in README.md"
+    local majorMinor=${version%.*}
+    sed -i "s/composer require php-pp\/core ^[[:digit:]]\+.[[:digit:]]\+/composer require php-pp\/core ^${majorMinor}/" README.md
+}
+
+function updateChangelog() {
+    trap onError ERR
+
+    echo "Edit changelog"
+    "${rootDir}"/bin/release/changelog "${version}"
+}
+
+initLog
+updateReleaseBadge
+updateCodeLinesBadge
+updateComposerRequire
+# https://github.com/php-pp/core-contract/issues/3
+#updateChangelog
