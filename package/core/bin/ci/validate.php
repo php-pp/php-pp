@@ -13,8 +13,7 @@ require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 (new ParallelProcessesApplication())
     ->addProcess(new Process([__DIR__ . '/composer-normalize', '--dry-run']))
-    // https://github.com/php-pp/core/issues/1
-    //->addProcess(new Process([__DIR__ . '/composer-require-checker']))
+    ->addProcess(new Process([__DIR__ . '/composer-require-checker']))
     ->addProcess(new Process([__DIR__ . '/composer-validate']))
     ->addProcess(new Process([__DIR__ . '/phpcs']))
     ->addProcess(new Process([__DIR__ . '/phpdd']))
