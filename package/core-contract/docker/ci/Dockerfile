@@ -4,6 +4,9 @@ COPY --from=composer:2.1.12 /usr/bin/composer /usr/local/bin/composer
 
 ENV COMPOSER_HOME=/composer
 
+# To use phpstan with differents PHP versions, like php7.4 "${PHPSTAN_BIN_PATH}" ...
+ENV PHPSTAN_BIN_PATH=/usr/local/bin/phpstan
+
 RUN \
     apt-get update \
     # To add add-apt-repository
@@ -12,23 +15,33 @@ RUN \
     && apt-get install -y \
         bash \
         shellcheck \
+        php7.4-cli \
+        php7.4-simplexml \
+        php7.4-mbstring \
         php8.0-cli \
         php8.0-xml \
-        # For unused-scanner \
         php8.0-mbstring \
         # For Composer
         curl zip php8.0-curl php8.0-zip \
 
+    # For php scripts in bin
+    && php7.4 /usr/local/bin/composer global require \
+        steevanb/php-parallel-processes:0.2.* \
+        symfony/console:5.3.* \
+
     # Install CI tools
-    && composer global require \
-        steevanb/php-parallel-processes:0.2.0 \
-        phpstan/phpstan:1.1.* \
-        phpstan/phpstan-deprecation-rules:1.0.* \
-        phpstan/phpstan-strict-rules:1.0.* \
+    && php7.4 /usr/local/bin/composer global require \
         maglnet/composer-require-checker:3.5.* \
         wapmorgan/php-deprecation-detector:2.0.* \
         steevanb/php-code-sniffs:4.2.* \
+        phpstan/phpstan:1.1.* \
+        phpstan/phpstan-deprecation-rules:1.0.* \
+        phpstan/phpstan-strict-rules:1.0. \
+        phpstan/phpstan-phpunit:1.0.* \
+        spaze/phpstan-disallowed-calls:2.0.* \
+        ergebnis/phpstan-rules:1.0.* \
         insolita/unused-scanner:2.3.* \
+        ergebnis/composer-normalize:2.15.* \
     && ln -s ${COMPOSER_HOME}/vendor/bin/composer-require-checker /usr/local/bin/composer-require-checker \
     && ln -s ${COMPOSER_HOME}/vendor/bin/phpdd /usr/local/bin/phpdd \
     && ln -s ${COMPOSER_HOME}/vendor/bin/phpcs /usr/local/bin/phpcs \

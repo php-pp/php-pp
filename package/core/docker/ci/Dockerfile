@@ -18,14 +18,12 @@ RUN \
         shellcheck \
         php7.4-cli \
         php7.4-simplexml \
-        # For PHPUnit
         php7.4-mbstring \
         php8.0-cli \
         php8.0-simplexml \
-        # For coverage \
-        php8.0-xdebug \
-        # For unused-scanner
         php8.0-mbstring \
+        # For coverage
+        php8.0-xdebug \
         # For Composer
         curl zip php8.0-curl php8.0-zip \
 
@@ -37,7 +35,6 @@ RUN \
     && php7.4 /usr/local/bin/composer global require \
         steevanb/php-parallel-processes:0.2.* \
         symfony/console:5.3.* \
-        php-pp/collection:0.10.* \
 
     # Install CI tools
     && php7.4 /usr/local/bin/composer global require \
