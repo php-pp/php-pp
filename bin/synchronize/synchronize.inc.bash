@@ -53,5 +53,4 @@ FILTER_BRANCH_SQUELCH_WARNING=1 \
 
 echo ""
 echo -e "> Push to \e[33m${READ_ONLY_REPOSITORY_URL}\e[0m"
-git branch -m synchronize
-git push ${READ_ONLY_REPOSITORY_URL} synchronize
+git push "${READ_ONLY_REPOSITORY_URL}" "${GIT_BRANCH}"
