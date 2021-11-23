@@ -6,4 +6,4 @@ readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 
 source "${ROOT_DIR}"/bin/ci/dockerise.inc.bash
 
-php8.0 "${ROOT_DIR}"/bin/ci/binaries.php "${@}" validate
+php8.0 "${ROOT_DIR}"/bin/ci/binaries.php "${@}" infection

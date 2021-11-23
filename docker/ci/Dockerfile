@@ -30,12 +30,6 @@ RUN \
         php8.0-curl \
         php8.0-zip \
 
-    # Install PHP dependencies
-    && php8.0 /usr/local/bin/composer global require \
-        steevanb/php-parallel-processes:0.2.* \
-        symfony/console:5.3.* \
-        symfony/finder:5.3.* \
-
     # Purge
     && apt-get purge -y software-properties-common \
     && apt-get autoremove -y \
