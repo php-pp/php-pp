@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+
+source "${ROOT_DIR}"/config/docker.inc.bash
+
+set +e
+docker image inspect "${DOCKER_BINARY_IMAGE_NAME}" > /dev/null 2>&1
+readonly DOCKER_IMAGE_EXISTS=${?}
+set -e
+
+if [ ${DOCKER_IMAGE_EXISTS} == 1 ]; then
+    ${ROOT_DIR}/bin/binary/docker
+fi
+
+readonly BIN_DIR="${ROOT_DIR}/bin/dev"
+source "${ROOT_DIR}"/bin/dockerise.inc.bash
+
+php8.0 "${ROOT_DIR}/bin/binary/binaries.php" "${@}" bin/dev/start

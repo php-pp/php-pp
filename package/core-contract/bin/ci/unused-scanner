@@ -3,7 +3,7 @@
 set -eu
 
 readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
-source "${ROOT_DIR}"/bin/common.inc.sh
+source "${ROOT_DIR}"/bin/common.inc.bash
 source "${ROOT_DIR}"/bin/dockerise.inc.bash
 
 unused-scanner "${ROOT_DIR}"/config/ci/unused-scanner.php

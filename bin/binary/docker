@@ -4,7 +4,7 @@ set -eu
 
 readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 
-source "${ROOT_DIR}"/config/docker.inc.bash
+source "${ROOT_DIR}/config/docker.inc.bash"
 
 function buildDockerImage() {
     local dockerImageName="${1}"
@@ -30,25 +30,11 @@ function buildDockerImage() {
                 "${ROOT_DIR}"
 }
 
-function pushDockerImage() {
-    local dockerImageName="${1}"
-
-    echo "Push Docker image ${dockerImageName}."
-    docker push "${dockerImageName}"
-}
-
 refresh=false
-push=false
 for param in "${@}"; do
     if [ "${param}" == "--refresh" ]; then
         refresh=true
-    elif [ "${param}" == "--push" ]; then
-        push=true
     fi
 done
 
-buildDockerImage "${DOCKER_CI_IMAGE_NAME}" ""${ROOT_DIR}"/docker/ci/Dockerfile"
-
-if [ "${push}" == true ]; then
-    pushDockerImage "${DOCKER_CI_IMAGE_NAME}"
-fi
+buildDockerImage "${DOCKER_BINARY_IMAGE_NAME}" "${ROOT_DIR}/docker/binary/Dockerfile"

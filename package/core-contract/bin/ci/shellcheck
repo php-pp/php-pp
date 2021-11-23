@@ -3,8 +3,8 @@
 set -eu
 
 readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
-. "${ROOT_DIR}"/bin/common.inc.sh
-. "${ROOT_DIR}"/bin/dockerise.inc.bash
+source "${ROOT_DIR}"/bin/common.inc.bash
+source "${ROOT_DIR}"/bin/dockerise.inc.bash
 
 readonly binaries=(
     bin/ci/composer-require-checker
@@ -22,7 +22,7 @@ readonly binaries=(
     bin/release/docker
     bin/release/env
     bin/release/prepare
-    bin/common.inc.sh
+    bin/common.inc.bash
     bin/composer
     bin/dockerise.inc.bash
 )

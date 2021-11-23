@@ -16,7 +16,7 @@ function createProcesses(string $binary): ProcessArray
 {
     $return = new ProcessArray();
     foreach ((new Finder())->directories()->in(dirname(__DIR__, 2) . '/package')->depth(0) as $directory) {
-        if (file_exists($directory->getPathName() . '/bin/ci/' . $binary)) {
+        if (file_exists($directory->getPathName() . '/' . $binary)) {
             $return->offsetSet(null, createProcess($directory->getRelativePathname(), $binary));
         }
     }
@@ -26,7 +26,7 @@ function createProcesses(string $binary): ProcessArray
 
 function createProcess(string $package, string $binary): Process
 {
-    return (new Process([dirname(__DIR__, 2) . '/package/' . $package . '/bin/ci/' . $binary]))
+    return (new Process([dirname(__DIR__, 2) . '/package/' . $package . '/' . $binary]))
         ->setName($package);
 }
 
