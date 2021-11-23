@@ -20,14 +20,13 @@ if [ -z "${I_AM_A_DOCKER_CONTAINER:-}" ]; then
             --rm \
             --tty \
             ${DOCKER_RUN_INTERACTIVE} \
-            --volume "${ROOT_DIR}"/bin/synchronize:/app/bin/synchronize \
-            --volume "${ROOT_DIR}"/config/docker.inc.bash:/app/config/docker.inc.bash \
-            --volume "${ROOT_DIR}"/config/github.inc.bash:/app/config/github.inc.bash \
+            --volume "${ROOT_DIR}":"${ROOT_DIR}" \
+            --volume /usr/bin/docker:/usr/bin/docker \
+            --volume /var/run/docker.sock:/var/run/docker.sock \
             --env I_AM_A_DOCKER_CONTAINER=true \
-            --entrypoint /app/bin/synchronize/"$(basename "${0}")" \
-            --workdir /app \
-            "${DOCKER_SYNCHRONIZE_IMAGE_NAME}" \
-            "${@}"
+            --workdir "${ROOT_DIR}" \
+            "${DOCKER_CI_IMAGE_NAME}" \
+            "${ROOT_DIR}"/bin/ci/"$(basename "${0}")"
 
     exit 0
 fi

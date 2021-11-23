@@ -37,7 +37,7 @@ if ! ${isInDocker}; then
             --volume "${ROOT_DIR}":/app \
             --volume ${coreContractPath}:${coreContractPath} \
             --user "$(id -u)":"$(id -g)" \
-            --entrypoint "${BIN_DIR}"/"$(basename "${0}")" \
+            --entrypoint "/app/${BIN_DIR}/$(basename "${0}")" \
             --workdir /app \
             --env HOST_ROOT_DIR="${ROOT_DIR}" \
             "${DOCKER_IMAGE_NAME}" \
