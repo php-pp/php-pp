@@ -2,8 +2,6 @@
 
 set -eu
 
-source "${ROOT_DIR}"/config/docker.inc.bash
-
 if [ -z "${I_AM_PHPPP_DOCKER_CONTAINER:-}" ]; then
     set +e
     tty -s && isInteractiveShell=true || isInteractiveShell=false
@@ -25,8 +23,8 @@ if [ -z "${I_AM_PHPPP_DOCKER_CONTAINER:-}" ]; then
             --volume /var/run/docker.sock:/var/run/docker.sock \
             --env I_AM_PHPPP_DOCKER_CONTAINER=true \
             --workdir "${ROOT_DIR}" \
-            "${DOCKER_CI_IMAGE_NAME}" \
-            "${ROOT_DIR}"/bin/ci/"$(basename "${0}")"
+            "${DOCKER_BINARY_IMAGE_NAME}" \
+            "${BIN_DIR}"/"$(basename "${0}")"
 
     exit 0
 fi
