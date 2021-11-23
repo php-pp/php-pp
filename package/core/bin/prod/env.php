@@ -13,7 +13,7 @@ $rootDir = dirname(__DIR__, 2);
 
 $application = new ParallelProcessesApplication();
 
-$composerProcess = (new Process([$rootDir . '/bin/composer', 'update', '--ansi']))
+$composerProcess = (new Process([$rootDir . '/bin/composer', 'update', '--no-dev', '--ansi']))
     ->setName('composer update');
 
 $phpPpDir = $rootDir . '/vendor/php-pp';
@@ -23,10 +23,6 @@ if (is_dir($phpPpDir)) {
     $composerProcess->getStartCondition()->addProcessSuccessful($rmPhpPpProcess);
 }
 
-$symlinksProcess = new Process([$rootDir . '/bin/dev/symlinks']);
-$symlinksProcess->getStartCondition()->addProcessSuccessful($composerProcess);
+$application->addProcess($composerProcess);
 
-$application
-    ->addProcess($composerProcess)
-    ->addProcess($symlinksProcess)
-    ->run(new ArgvInput($argv));
+$application->run(new ArgvInput($argv));
