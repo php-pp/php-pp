@@ -1,0 +1,15 @@
+{
+    "name": "php-pp/php-pp",
+    "description": "PHP++ mono repository",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PhpPp\\Core\\Component\\": "package/core/src",
+            "PhpPp\\Core\\Contract\\": "package/core-contract/src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
