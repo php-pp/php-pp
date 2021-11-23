@@ -9,7 +9,7 @@
     },
     "require-dev": {
         "ext-simplexml": "*",
-        "phpbehavior/phpbehavior": "0.7.*",
+        "phpbehavior/phpbehavior": "0.8.*",
         "phpunit/phpunit": "9.5.*",
         "symfony/var-dumper": "5.3.*"
     },
