@@ -4,24 +4,10 @@ declare(strict_types=1);
 
 namespace PhpPp\Core\Component\Tests\Behavior\Collection\StringCollection;
 
-use PhpBehavior\BehaviorTestCase\AbstractMethodBehaviorTestCase;
-use PhpPp\Core\Component\Collection\StringCollection;
+use PhpPp\Core\Component\Tests\Behavior\Collection\AbstractFillKeysTest;
 
 /** @coversNothing */
-final class FillKeysTest extends AbstractMethodBehaviorTestCase
+final class FillKeysTest extends AbstractFillKeysTest
 {
-    protected static function getClassName(): string
-    {
-        return StringCollection::class;
-    }
-
-    protected static function getMethodName(): string
-    {
-        return 'fillKeys';
-    }
-
-    public function testCode(): void
-    {
-        static::assertCode('        return $this->doFillKeys($keys, $value);');
-    }
+    use GetClassNameTrait;
 }
