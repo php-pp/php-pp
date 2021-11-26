@@ -26,5 +26,14 @@
         "psr-4": {
             "PhpPp\\Core\\Component\\Tests\\": "tests"
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@rm-composer-lock"
+        ],
+        "post-update-cmd": [
+            "@rm-composer-lock"
+        ],
+        "rm-composer-lock": "rm composer.lock"
     }
 }

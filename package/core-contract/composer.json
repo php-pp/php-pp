@@ -13,5 +13,14 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "rm-composer-lock": "rm composer.lock",
+        "post-install-cmd": [
+            "@rm-composer-lock"
+        ],
+        "post-update-cmd": [
+            "@rm-composer-lock"
+        ]
     }
 }
