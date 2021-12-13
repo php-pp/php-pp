@@ -1,4 +1,4 @@
-FROM php:8.0.12-cli-alpine3.14
+FROM php:8.1.0-cli-alpine3.15
 
 COPY --from=composer:2.1.12 /usr/bin/composer /usr/local/bin/composer
 
@@ -15,7 +15,7 @@ RUN \
 
     # Install xdebug
     && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
-    && pecl install xdebug-3.0.4 \
+    && pecl install xdebug-3.1.2 \
     && docker-php-ext-enable xdebug \
     && apk del .build-deps \
 

@@ -22,10 +22,13 @@ RUN \
         php8.0-cli \
         php8.0-simplexml \
         php8.0-mbstring \
+        php8.1-cli \
+        php8.1-simplexml \
+        php8.1-mbstring \
         # For coverage
-        php8.0-xdebug \
+        php8.1-xdebug \
         # For Composer
-        curl zip php8.0-curl php8.0-zip \
+        curl zip php8.1-curl php8.1-zip \
 
     # Configure Composer
     && mkdir /composer \
