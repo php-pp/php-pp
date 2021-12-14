@@ -22,7 +22,7 @@ RUN \
     && apt-get install -y software-properties-common \
     && LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php \
 
-    # Install PHP and Composer dependencies
+    # Install PHP
     && apt-get install -y \
         curl \
         zip \

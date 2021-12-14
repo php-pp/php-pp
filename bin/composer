@@ -4,13 +4,6 @@ set -eu
 
 readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/..")"
 
-function removeComposerLock {
-    if [ -f "${ROOT_DIR}"/composer.lock ]; then
-        rm "${ROOT_DIR}"/composer.lock
-    fi
-}
-
-removeComposerLock
 docker \
     run \
         -it \
@@ -20,4 +13,3 @@ docker \
         --user "$(id -u)":"$(id -g)" \
         composer:2.1.12 \
         "${@}"
-removeComposerLock
