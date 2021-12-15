@@ -17,13 +17,13 @@ RUN \
         bash \
         shellcheck \
         php7.4-cli \
-        php7.4-simplexml \
+        php7.4-xml \
         php7.4-mbstring \
         php8.0-cli \
-        php8.0-simplexml \
+        php8.0-xml \
         php8.0-mbstring \
         php8.1-cli \
-        php8.1-simplexml \
+        php8.1-xml \
         php8.1-mbstring \
         # For coverage
         php8.1-xdebug \
@@ -37,21 +37,21 @@ RUN \
     # For php scripts in bin
     && php7.4 /usr/local/bin/composer global require \
         steevanb/php-parallel-processes:0.2.* \
-        symfony/console:5.3.* \
+        symfony/console:5.4.* \
 
     # Install CI tools
     && php7.4 /usr/local/bin/composer global require \
-        maglnet/composer-require-checker:3.5.* \
+        maglnet/composer-require-checker:3.8.* \
         wapmorgan/php-deprecation-detector:2.0.* \
         steevanb/php-code-sniffs:4.2.* \
-        phpstan/phpstan:1.1.* \
+        phpstan/phpstan:1.2.* \
         phpstan/phpstan-deprecation-rules:1.0.* \
-        phpstan/phpstan-strict-rules:1.0. \
+        phpstan/phpstan-strict-rules:1.1. \
         phpstan/phpstan-phpunit:1.0.* \
         spaze/phpstan-disallowed-calls:2.0.* \
         ergebnis/phpstan-rules:1.0.* \
         insolita/unused-scanner:2.3.* \
-        ergebnis/composer-normalize:2.15.* \
+        ergebnis/composer-normalize:2.18.* \
         infection/infection:0.25.* \
     && ln -s ${COMPOSER_HOME}/vendor/bin/composer-require-checker /usr/local/bin/composer-require-checker \
     && ln -s ${COMPOSER_HOME}/vendor/bin/phpdd /usr/local/bin/phpdd \
