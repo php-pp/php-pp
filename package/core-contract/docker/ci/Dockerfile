@@ -21,8 +21,11 @@ RUN \
         php8.0-cli \
         php8.0-xml \
         php8.0-mbstring \
+        php8.1-cli \
+        php8.1-xml \
+        php8.1-mbstring \
         # For Composer
-        curl zip php8.0-curl php8.0-zip \
+        curl zip php8.1-curl php8.1-zip \
 
     # For php scripts in bin
     && php7.4 /usr/local/bin/composer global require \
