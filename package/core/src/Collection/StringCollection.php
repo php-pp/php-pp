@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpPp\Core\Component\Collection;
 
+use PhpPp\Core\Component\Exception\Collection\InvalidValueTypeException;
 use PhpPp\Core\Contract\Collection\StringCollectionInterface;
 
 class StringCollection extends AbstractCollection implements StringCollectionInterface
@@ -61,5 +62,15 @@ class StringCollection extends AbstractCollection implements StringCollectionInt
     public function toArray(): array
     {
         return $this->values;
+    }
+
+    /** @return static */
+    protected function assertValueType($value): self
+    {
+        if (is_string($value) === false) {
+            throw InvalidValueTypeException::createFromAllowedTypes(new StringCollection(['string']));
+        }
+
+        return $this;
     }
 }

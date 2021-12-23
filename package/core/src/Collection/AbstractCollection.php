@@ -26,6 +26,12 @@ use PhpPp\Core\Contract\{
 
 abstract class AbstractCollection implements CollectionInterface
 {
+    /**
+     * @param mixed $value
+     * @return static<mixed>
+     */
+    abstract protected function assertValueType($value): self;
+
     /** @var array<string|int, mixed> */
     protected array $values = [];
 
@@ -334,7 +340,9 @@ abstract class AbstractCollection implements CollectionInterface
      */
     protected function doAdd($value): CollectionInterface
     {
-        $this->assertIsNotReadOnly();
+        $this
+            ->assertIsNotReadOnly()
+            ->assertValueType($value);
 
         if ($this->canAddValue($value)) {
             $this->values[] = $value;
@@ -352,7 +360,8 @@ abstract class AbstractCollection implements CollectionInterface
     {
         $this
             ->assertIsNotReadOnly()
-            ->assertKeyType($key);
+            ->assertKeyType($key)
+            ->assertValueType($value);
 
         if ($this->canAddValue($value)) {
             $this->values[$key] = $value;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpPp\Core\Component\Collection;
 
+use PhpPp\Core\Component\Exception\Collection\InvalidValueTypeException;
 use PhpPp\Core\Contract\Collection\IntegerNullableCollectionInterface;
 
 class IntegerNullableCollection extends AbstractCollection implements IntegerNullableCollectionInterface
@@ -59,5 +60,15 @@ class IntegerNullableCollection extends AbstractCollection implements IntegerNul
     public function toArray(): array
     {
         return $this->values;
+    }
+
+    /** @return static */
+    protected function assertValueType($value): self
+    {
+        if (is_int($value) === false && is_null($value) === false) {
+            throw InvalidValueTypeException::createFromAllowedTypes(new StringCollection(['integer', 'null']));
+        }
+
+        return $this;
     }
 }

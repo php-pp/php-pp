@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpPp\Core\Component\Collection;
 
+use PhpPp\Core\Component\Exception\Collection\InvalidValueTypeException;
 use PhpPp\Core\Contract\Collection\FloatNullableCollectionInterface;
 
 class FloatNullableCollection extends AbstractCollection implements FloatNullableCollectionInterface
@@ -59,5 +60,15 @@ class FloatNullableCollection extends AbstractCollection implements FloatNullabl
     public function toArray(): array
     {
         return $this->values;
+    }
+
+    /** @return static */
+    protected function assertValueType($value): self
+    {
+        if (is_float($value) === false && is_null($value) === false) {
+            throw InvalidValueTypeException::createFromAllowedTypes(new StringCollection(['float', 'null']));
+        }
+
+        return $this;
     }
 }
