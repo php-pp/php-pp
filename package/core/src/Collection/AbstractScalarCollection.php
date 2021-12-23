@@ -31,29 +31,6 @@ abstract class AbstractScalarCollection extends AbstractCollection
     }
 
     /**
-     * @param string|int $key
-     * @param mixed $value
-     * @return static<mixed>
-     */
-    protected function doSet($key, $value): self
-    {
-        $this->assertValueType($value);
-
-        return parent::doSet($key, $value);
-    }
-
-    /**
-     * @param mixed $value
-     * @return static<mixed>
-     */
-    protected function doAdd($value): self
-    {
-        $this->assertValueType($value);
-
-        return parent::doAdd($value);
-    }
-
-    /**
      * @param mixed $value
      * @return static<mixed>
      */

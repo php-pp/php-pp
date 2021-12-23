@@ -24,29 +24,6 @@ abstract class AbstractObjectCollection extends AbstractCollection
         return $this->comparisonMode;
     }
 
-    /**
-     * @param mixed $value
-     * @return static<mixed>
-     */
-    protected function doAdd($value): self
-    {
-        $this->assertValueType($value);
-
-        return parent::doAdd($value);
-    }
-
-    /**
-     * @param string|int $key
-     * @param mixed $value
-     * @return static<mixed>
-     */
-    protected function doSet($key, $value): self
-    {
-        $this->assertValueType($value);
-
-        return parent::doSet($key, $value);
-    }
-
     /** @return static<mixed> */
     protected function doSetComparisonMode(int $mode): self
     {

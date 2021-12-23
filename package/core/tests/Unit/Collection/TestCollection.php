@@ -116,4 +116,9 @@ class TestCollection extends AbstractCollection
     {
         return $this->assertIsNotReadOnly();
     }
+
+    protected function assertValueType($value): AbstractCollection
+    {
+        return $this;
+    }
 }

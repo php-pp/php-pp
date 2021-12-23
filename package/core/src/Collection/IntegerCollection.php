@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpPp\Core\Component\Collection;
 
+use PhpPp\Core\Component\Exception\Collection\InvalidValueTypeException;
 use PhpPp\Core\Contract\Collection\IntegerCollectionInterface;
 
 class IntegerCollection extends AbstractCollection implements IntegerCollectionInterface
@@ -61,5 +62,15 @@ class IntegerCollection extends AbstractCollection implements IntegerCollectionI
     public function toArray(): array
     {
         return $this->values;
+    }
+
+    /** @return static */
+    protected function assertValueType($value): self
+    {
+        if (is_int($value) === false) {
+            throw InvalidValueTypeException::createFromAllowedTypes(new StringCollection(['integer']));
+        }
+
+        return $this;
     }
 }

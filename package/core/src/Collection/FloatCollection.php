@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpPp\Core\Component\Collection;
 
+use PhpPp\Core\Component\Exception\Collection\InvalidValueTypeException;
 use PhpPp\Core\Contract\Collection\FloatCollectionInterface;
 
 class FloatCollection extends AbstractCollection implements FloatCollectionInterface
@@ -59,5 +60,15 @@ class FloatCollection extends AbstractCollection implements FloatCollectionInter
     public function toArray(): array
     {
         return $this->values;
+    }
+
+    /** @return static */
+    protected function assertValueType($value): self
+    {
+        if (is_float($value) === false) {
+            throw InvalidValueTypeException::createFromAllowedTypes(new StringCollection(['float']));
+        }
+
+        return $this;
     }
 }
